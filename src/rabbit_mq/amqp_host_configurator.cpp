@@ -1,4 +1,4 @@
-#include "masstransit_cpp/rabbit_mq/amqp_host_configurator.hpp"
+#include "rabbit_mq/amqp_host_configurator.hpp"
 
 namespace masstransit_cpp
 {	
@@ -28,10 +28,10 @@ namespace masstransit_cpp
 
 	amqp_host_configurator& amqp_host_configurator::use_ssl(std::function<void(ssl_config&)> const& configure)
 	{
-		if(ssl_ == boost::none)
+		if(ssl_ == std::nullopt)
 			ssl_ = ssl_config();
 
-		configure(ssl_.get());
+		configure(ssl_.value());
 		return *this;
 	}
 

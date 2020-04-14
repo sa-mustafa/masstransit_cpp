@@ -1,4 +1,4 @@
-#include "masstransit_cpp/threads/worker_thread.hpp"
+#include "threads/worker_thread.hpp"
 
 namespace masstransit_cpp
 {

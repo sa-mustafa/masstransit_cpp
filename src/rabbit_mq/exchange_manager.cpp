@@ -1,6 +1,5 @@
-#include "masstransit_cpp/rabbit_mq/exchange_manager.hpp"
-
-#include <boost/log/trivial.hpp>
+#include "rabbit_mq/exchange_manager.hpp"
+#include <iostream>
 #include <SimpleAmqpClient/SimpleAmqpClient.h>
 
 namespace masstransit_cpp
@@ -16,7 +15,7 @@ namespace masstransit_cpp
 			return exchanges_.find(type) != exchanges_.end();
 		}
 
-		void exchange_manager::declare_exchange(std::string const& name, boost::shared_ptr<AmqpClient::Channel> const& channel)
+		void exchange_manager::declare_exchange(std::string const& name, std::shared_ptr<AmqpClient::Channel> const& channel)
 		{
 			if (has_exchange(name))
 				return;
@@ -28,11 +27,11 @@ namespace masstransit_cpp
 			}
 			catch (std::exception const& ex)
 			{
-				BOOST_LOG_TRIVIAL(error) << "exchange_manager::declare_message_type\n\tException: " << ex.what();
+				std::cout /*BOOST_LOG_TRIVIAL(error)*/ << "exchange_manager::declare_message_type\n\tException: " << ex.what();
 			}
 			catch (...)
 			{
-				BOOST_LOG_TRIVIAL(error) << "exchange_manager::declare_message_type\n\tException: unknown";
+				std::cout /*BOOST_LOG_TRIVIAL(error)*/ << "exchange_manager::declare_message_type\n\tException: unknown";
 			}
 		}
 	}

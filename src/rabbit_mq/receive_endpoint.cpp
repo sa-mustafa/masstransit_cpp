@@ -1,18 +1,18 @@
-#include "masstransit_cpp/rabbit_mq/receive_endpoint.hpp"
-#include "masstransit_cpp/rabbit_mq/exchange_manager.hpp"
-#include "masstransit_cpp/datetime.hpp"
+#include "rabbit_mq/receive_endpoint.hpp"
+#include "rabbit_mq/exchange_manager.hpp"
 
+#include <chrono>
+#include <ctime>
 #include <stdexcept>
-#include <boost/log/trivial.hpp>
 #include <SimpleAmqpClient/SimpleAmqpClient.h>
 
 namespace masstransit_cpp
 {
 	namespace rabbit_mq
 	{
-		receive_endpoint::receive_endpoint(boost::shared_ptr<AmqpClient::Channel> const& channel, 
+		receive_endpoint::receive_endpoint(std::shared_ptr<AmqpClient::Channel> const& channel, 
 			std::string const& queue, host_info const& host,
-		    const uint16_t prefetch_count, boost::posix_time::time_duration const& timeout,
+		    const uint16_t prefetch_count, std::chrono::milliseconds const& timeout,
 			consumers_map const& consumers_by_type,
 			std::shared_ptr<i_publish_endpoint> const& publish_endpoint)
 			: i_receive_endpoint(consumers_by_type, publish_endpoint)
@@ -44,11 +44,11 @@ namespace masstransit_cpp
 
 			try
 			{
-				BOOST_LOG_TRIVIAL(debug) << "bus consumed message:\n" << body;
+				//BOOST_LOG_TRIVIAL(debug) << "bus consumed message:\n" << body;
 
 				consumer->consume(context, publish_endpoint_);
 
-				BOOST_LOG_TRIVIAL(debug) << "[DONE]";
+				//BOOST_LOG_TRIVIAL(debug) << "[DONE]";
 			}
 			catch (std::exception & ex)
 			{
@@ -83,24 +83,28 @@ namespace masstransit_cpp
 			tag_ = channel_->BasicConsume(queue_, "", true, false, true, prefetch_count_);
 		}
 
-		int receive_endpoint::get_ms(boost::posix_time::time_duration const& timeout)
+		int receive_endpoint::get_ms(std::chrono::milliseconds const& timeout)
 		{
-			const auto ms = timeout.total_milliseconds();
+			const auto ms = timeout.count();
 			if (ms <= static_cast<int64_t>(std::numeric_limits<int>::max()))
 				return static_cast<int>(ms);
 			
-			BOOST_LOG_TRIVIAL(warning) << "receive_endpoint::ctor: ms count is greater numeric_limits<int>::max";
+			//BOOST_LOG_TRIVIAL(warning) << "receive_endpoint::ctor: ms count is greater numeric_limits<int>::max";
 			return 500;
 		}
 
 		void receive_endpoint::on_error(consume_context_info context, std::string const& consumer_type, 
 			std::string const& message, std::exception const& ex) const
 		{
-			BOOST_LOG_TRIVIAL(error) << "when bus consumer[" << consumer_type << "] try handle message:\n"
-				<< message << "\n\tException: " << ex.what();
+			//BOOST_LOG_TRIVIAL(error) << "when bus consumer[" << consumer_type << "] try handle message:\n" << message << "\n\tException: " << ex.what();
+			char date_time[100];
+			std::time_t now_t = std::time(nullptr);
+			std::tm now_tm;
+			localtime_s(&now_tm, &now_t);
+			strftime(date_time, _countof(date_time), "%F %T", &now_tm);
 
 			context.headers.emplace("MT-Fault-Message", std::string(ex.what()));
-			context.headers.emplace("MT-Fault-Timestamp", to_string(datetime::now()));
+			context.headers.emplace("MT-Fault-Timestamp", date_time);
 			context.headers.emplace("MT-Reason", "fault");
 
 			context.headers.emplace("MT-Host-MachineName", host_.machine_name);

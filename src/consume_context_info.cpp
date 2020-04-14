@@ -1,5 +1,5 @@
-#include <masstransit_cpp/consume_context_info.hpp>
-#include <masstransit_cpp/json_adapters.hpp>
+#include <consume_context_info.hpp>
+#include <json_adapters.hpp>
 
 namespace masstransit_cpp
 {
@@ -19,9 +19,9 @@ namespace masstransit_cpp
 			{ "host", p.send_host }
 		};
 
-		if(p.correlation_id)
+		if (p.correlation_id)
 		{
-			j["correlationId"] = p.correlation_id.get();
+			j["correlationId"] = p.correlation_id.value();
 		}
 	}
 

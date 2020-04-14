@@ -1,8 +1,8 @@
-#include "masstransit_cpp/rabbit_mq/rabbit_mq_configurator.hpp"
-#include "masstransit_cpp/rabbit_mq/amqp_host_configurator.hpp"
-#include "masstransit_cpp/rabbit_mq/rabbit_mq_bus.hpp"
-#include "masstransit_cpp/rabbit_mq/exchange_manager.hpp"
-#include "masstransit_cpp/rabbit_mq/receive_endpoint.hpp"
+#include "rabbit_mq/rabbit_mq_configurator.hpp"
+#include "rabbit_mq/amqp_host_configurator.hpp"
+#include "rabbit_mq/rabbit_mq_bus.hpp"
+#include "rabbit_mq/exchange_manager.hpp"
+#include "rabbit_mq/receive_endpoint.hpp"
 
 namespace masstransit_cpp
 {

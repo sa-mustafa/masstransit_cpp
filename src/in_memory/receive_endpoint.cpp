@@ -1,6 +1,5 @@
-#include "masstransit_cpp/in_memory/receive_endpoint.hpp"
-
-#include <boost/log/trivial.hpp>
+#include "in_memory/receive_endpoint.hpp"
+#include <iostream>
 
 namespace masstransit_cpp
 {
@@ -25,21 +24,19 @@ namespace masstransit_cpp
 				auto body = message_context.message.dump(2);
 				try
 				{
-					BOOST_LOG_TRIVIAL(debug) << "bus consumed message:\n" << body;
+					//BOOST_LOG_TRIVIAL(debug) << "bus consumed message:\n" << body;
 
 					consumer->consume(message_context, publish_endpoint_);
 
-					BOOST_LOG_TRIVIAL(debug) << "[DONE]";
+					//BOOST_LOG_TRIVIAL(debug) << "[DONE]";
 				}
 				catch (std::exception & ex)
 				{
-					BOOST_LOG_TRIVIAL(error) << "when bus consumer[" << consumer->message_type() << "] try handle message:\n"
-						<< body << "\n\tException: " << ex.what();
+					std::cout /*BOOST_LOG_TRIVIAL(error)*/ << "when bus consumer[" << consumer->message_type() << "] try handle message:\n" << body << "\n\tException: " << ex.what();
 				}
 				catch (...)
 				{
-					BOOST_LOG_TRIVIAL(error) << "when bus consumer[" << consumer->message_type() << "] try handle message:\n"
-						<< body << "\n\tException: unknown";
+					std::cout /*BOOST_LOG_TRIVIAL(error)*/ << "when bus consumer[" << consumer->message_type() << "] try handle message:\n" << body << "\n\tException: unknown";
 				}
 			}, context);
 		}

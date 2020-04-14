@@ -1,6 +1,5 @@
-#include "masstransit_cpp/in_memory/in_memory_bus.hpp"
-
-#include <boost/log/trivial.hpp>
+#include "in_memory/in_memory_bus.hpp"
+#include <iostream>
 
 namespace masstransit_cpp
 {
@@ -43,22 +42,22 @@ namespace masstransit_cpp
 			auto body = nlohmann::json(message).dump(2);
 			try
 			{
-				BOOST_LOG_TRIVIAL(debug) << "bus publish message:\n" << body;
+				//BOOST_LOG_TRIVIAL(debug) << "bus publish message:\n" << body;
 
 				for (auto const& receiver : receivers_)
 					receiver->deliver(message);
 
-				BOOST_LOG_TRIVIAL(debug) << "[DONE]";
+				//BOOST_LOG_TRIVIAL(debug) << "[DONE]";
 				return true;
 			}
 			catch (std::exception & ex)
 			{
-				BOOST_LOG_TRIVIAL(error) << "rabbit_mq_bus::publish_impl\n\tException: " << ex.what();
+				/*BOOST_LOG_TRIVIAL(error)*/std::cout << "rabbit_mq_bus::publish_impl\n\tException: " << ex.what();
 				return false;
 			}
 			catch (...)
 			{
-				BOOST_LOG_TRIVIAL(error) << "rabbit_mq_bus::publish_impl\n\tException: unknown";
+				/*BOOST_LOG_TRIVIAL(error)*/std::cout << "rabbit_mq_bus::publish_impl\n\tException: unknown";
 				return false;
 			}
 		}, m);

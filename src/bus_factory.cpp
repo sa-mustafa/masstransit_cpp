@@ -1,6 +1,6 @@
-#include "masstransit_cpp/bus_factory.hpp"
-#include "masstransit_cpp/rabbit_mq/rabbit_mq_configurator.hpp"
-#include "masstransit_cpp/in_memory/in_memory_configurator.hpp"
+#include "bus_factory.hpp"
+#include "rabbit_mq/rabbit_mq_configurator.hpp"
+#include "in_memory/in_memory_configurator.hpp"
 
 namespace masstransit_cpp
 {

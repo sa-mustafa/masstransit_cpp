@@ -1,4 +1,4 @@
-#include <masstransit_cpp/json_adapters.hpp>
+#include <json_adapters.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/uuid/string_generator.hpp>
 

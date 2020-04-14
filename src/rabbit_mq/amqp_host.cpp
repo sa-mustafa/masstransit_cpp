@@ -1,5 +1,6 @@
-#include "masstransit_cpp/rabbit_mq/amqp_host.hpp"
+#include "rabbit_mq/amqp_host.hpp"
 #include <SimpleAmqpClient/Channel.h>
+#include <optional>
 #include <sstream>
 
 namespace masstransit_cpp
@@ -13,7 +14,7 @@ namespace masstransit_cpp
 
 	amqp_host::amqp_host(std::string const& host, int port, std::string const& virtual_host,
 		std::string const& user, std::string const& password,
-		boost::optional<ssl_config> const& ssl)
+		std::optional<ssl_config> const& ssl)
 		: host(host)
 		, vhost(virtual_host)
 		, port(port)
@@ -39,12 +40,12 @@ namespace masstransit_cpp
 		return res.str();
 	}
 
-	boost::shared_ptr<AmqpClient::Channel> amqp_host::create_channel() const
+	std::shared_ptr<AmqpClient::Channel> amqp_host::create_channel() const
 	{
 		if (!ssl)
 			return AmqpClient::Channel::Create(host, port, user, password, vhost);
-		
-		auto ssl_ = ssl.get();
+
+		auto ssl_ = ssl.value();
 		return AmqpClient::Channel::CreateSecure(ssl_.path_to_ca_cert, host, 
 			ssl_.path_to_client_key, ssl_.path_to_client_cert, port, user, password, vhost, 131072, ssl_.verify_hostname);
 	}

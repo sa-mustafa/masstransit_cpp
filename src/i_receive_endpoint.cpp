@@ -1,4 +1,4 @@
-#include "masstransit_cpp/i_receive_endpoint.hpp"
+#include "i_receive_endpoint.hpp"
 
 namespace masstransit_cpp
 {

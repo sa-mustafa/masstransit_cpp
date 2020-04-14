@@ -1,5 +1,5 @@
-#include "masstransit_cpp/in_memory/receive_endpoint_configurator.hpp"
-#include "masstransit_cpp/in_memory/receive_endpoint.hpp"
+#include "in_memory/receive_endpoint_configurator.hpp"
+#include "in_memory/receive_endpoint.hpp"
 
 namespace masstransit_cpp
 {

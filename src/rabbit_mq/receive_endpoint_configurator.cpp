@@ -1,4 +1,4 @@
-#include "masstransit_cpp/rabbit_mq/receive_endpoint_configurator.hpp"
+#include "rabbit_mq/receive_endpoint_configurator.hpp"
 
 #include <SimpleAmqpClient/Channel.h>
 
@@ -28,7 +28,7 @@ namespace masstransit_cpp
 			return *this;
 		}
 
-		receive_endpoint_configurator& receive_endpoint_configurator::poll_timeout(boost::posix_time::time_duration const& timeout)
+		receive_endpoint_configurator& receive_endpoint_configurator::poll_timeout(std::chrono::milliseconds const& timeout)
 		{
 			timeout_ = timeout;
 			return *this;

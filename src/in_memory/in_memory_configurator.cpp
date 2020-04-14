@@ -1,5 +1,5 @@
-#include "masstransit_cpp/in_memory/in_memory_configurator.hpp"
-#include "masstransit_cpp/in_memory/in_memory_bus.hpp"
+#include "in_memory/in_memory_configurator.hpp"
+#include "in_memory/in_memory_bus.hpp"
 
 namespace masstransit_cpp
 {

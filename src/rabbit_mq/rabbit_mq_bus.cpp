@@ -1,11 +1,10 @@
-#include "masstransit_cpp/rabbit_mq/rabbit_mq_bus.hpp"
-#include "masstransit_cpp/rabbit_mq/exchange_manager.hpp"
-#include "masstransit_cpp/rabbit_mq/receive_endpoint.hpp"
-#include <masstransit_cpp/threads/task_repeat.hpp>
-#include <masstransit_cpp/threads/worker_thread.hpp>
+#include "rabbit_mq/rabbit_mq_bus.hpp"
+#include "rabbit_mq/exchange_manager.hpp"
+#include "rabbit_mq/receive_endpoint.hpp"
+#include <threads/task_repeat.hpp>
+#include <threads/worker_thread.hpp>
 
 #include <SimpleAmqpClient/Channel.h>
-#include <boost/log/trivial.hpp>
 
 namespace masstransit_cpp
 {

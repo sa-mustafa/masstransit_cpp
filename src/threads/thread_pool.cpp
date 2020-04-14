@@ -1,4 +1,4 @@
-#include "masstransit_cpp/threads/thread_pool.hpp"
+#include "threads/thread_pool.hpp"
 
 namespace masstransit_cpp
 {
