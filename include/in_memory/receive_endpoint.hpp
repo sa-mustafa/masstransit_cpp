@@ -1,6 +1,7 @@
 #pragma once
 
 #include <global.hpp>
+#include <iostream>
 #include <i_receive_endpoint.hpp>
 #include <message_consumer.hpp>
 #include <threads/worker_thread.hpp>
