@@ -14,14 +14,14 @@ addons:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - g++-6
+      - g++-8
 
 services: rabbitmq
    
 install:
   - sudo apt-get -qq update
-  - sudo apt-get install -y libboost1.55-dev libboost-chrono1.55-dev libboost-date-time1.55-dev libboost-filesystem1.55-dev libboost-log1.55-dev libboost-system1.55-dev libboost-thread1.55-dev
-  - CXX=/usr/bin/g++-6 CC=/usr/bin/gcc-6
+  - sudo apt-get install -y libboost-dev libboost-date-time-dev libboost-filesystem-dev libboost-log-dev libboost-system-dev libboost-thread-dev
+  - CXX=/usr/bin/g++-8 CC=/usr/bin/gcc-8
   - export INSTALL_PREFIX=`pwd`/_install
   - mkdir -p _prereqs
   - export RABBITMQC_SSL=ON
@@ -30,7 +30,7 @@ install:
   - export BOOST_DI_DIR=`pwd`/di
   - git clone https://github.com/alanxz/rabbitmq-c.git
   - cd rabbitmq-c
-  - git checkout v0.8.0
+  - git checkout v0.10.0
   - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX} -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF -DBUILD_TOOLS=OFF -DENABLE_SSL_SUPPORT=${RABBITMQC_SSL} .
   - cmake --build . --target install
   - cd ..
