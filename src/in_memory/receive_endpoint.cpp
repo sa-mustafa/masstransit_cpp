@@ -1,5 +1,4 @@
 #include "in_memory/receive_endpoint.hpp"
-#include <iostream>
 
 namespace masstransit_cpp
 {
