@@ -20,6 +20,7 @@ services: rabbitmq
    
 install:
   - sudo apt-get -qq update
+  - sudo apt-get install gcc-8 g++-8
   - sudo apt-get install -y libboost-dev libboost-date-time-dev libboost-filesystem-dev libboost-log-dev libboost-system-dev libboost-thread-dev
   - CXX=/usr/bin/g++-8 CC=/usr/bin/gcc-8
   - export INSTALL_PREFIX=`pwd`/_install
