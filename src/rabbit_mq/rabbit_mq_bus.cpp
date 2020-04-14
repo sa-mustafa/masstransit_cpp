@@ -2,6 +2,7 @@
 #include "rabbit_mq/exchange_manager.hpp"
 #include "rabbit_mq/receive_endpoint.hpp"
 #include <threads/task_repeat.hpp>
+#include <threads/thread_pool.hpp>
 #include <threads/worker_thread.hpp>
 
 #include <SimpleAmqpClient/Channel.h>
@@ -34,28 +35,41 @@ namespace masstransit_cpp
 			receivers_.push_back(receiver);
 		}
 
-		receiving_loop_ = std::make_shared<threads::task_repeat>(std::chrono::seconds(15), &rabbit_mq_bus::process_input_messages, this);
+		receive_workers_ = std::make_shared<threads::thread_pool>(std::thread::hardware_concurrency());
 		publish_worker_ = std::make_unique<threads::worker_thread>();
 	}
 
 	void rabbit_mq_bus::wait() const
 	{
-		const auto loop = receiving_loop_;
-		if(loop != nullptr)
-			loop->wait();
+		auto workers = receive_workers_;
+		while (!workers->is_stopped())
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(1));
+			for (auto & q : receivers_)
+			{
+				// You may process the message on the current thread
+				//r->try_consume();
+				// or assign it to the thread pool.
+				workers->enqueue([](std::shared_ptr<rabbit_mq::receive_endpoint> const& endpoint)
+				{
+					return endpoint->try_consume();
+				}, q);
+			}
+		}
+		workers = nullptr;
 	}
 	
 	void rabbit_mq_bus::stop()
 	{
-		receiving_loop_->stop();
+		receive_workers_->stop();
+		receive_workers_ = nullptr;
 		publish_worker_ = nullptr;
-		receiving_loop_ = nullptr;
 		receivers_.clear();
 	}
 
 	std::future<bool> rabbit_mq_bus::publish(consume_context_info const& m, std::string const& e) const
 	{
-		return publish_worker_->enqueue([this](consume_context_info const& message, std::string const& exchange) -> bool
+		return publish_worker_->enqueue([this](consume_context_info const& message, std::string const& exchange)
 		{
 			exchange_manager_->declare_exchange(exchange, queue_channel_);
 			return message_publisher_.publish(message, queue_channel_, exchange);
@@ -67,15 +81,4 @@ namespace masstransit_cpp
 		message.send_host = host_info_;
 	}
 
-	bool rabbit_mq_bus::process_input_messages()
-	{
-		auto smth_consumed = false;
-		for (auto & q : receivers_)
-		{
-			if (q->try_consume())
-				smth_consumed = true;
-		}
-
-		return smth_consumed;
-	}
 }

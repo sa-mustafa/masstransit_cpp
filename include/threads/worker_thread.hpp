@@ -9,7 +9,7 @@ namespace masstransit_cpp
 		class MASSTRANSIT_API worker_thread : public tasks_queue
 		{
 		public:
-			worker_thread();
+			worker_thread(uint32_t core = UINT32_MAX);
 			virtual ~worker_thread();
 
 			void wait() const;

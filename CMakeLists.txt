@@ -19,11 +19,11 @@ set(MTC_SOVERSION ${_VERSION_MAJOR})
 
 # Dependencies
 
-find_package(Boost REQUIRED COMPONENTS log date_time)
+find_package(Boost REQUIRED)
 include_directories(SYSTEM ${Boost_INCLUDE_DIR})
-link_directories(${Boost_LIBRARY_DIRS})
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBOOST_ALL_NO_LIB -DBOOST_LOG_DYN_LINK")
-set(AdditionalLibraries ${AdditionalLibraries} ${Boost_LIBRARIES})
+#link_directories(${Boost_LIBRARY_DIRS})
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBOOST_ALL_NO_LIB -DBOOST_LOG_DYN_LINK")
+#set(AdditionalLibraries ${AdditionalLibraries} ${Boost_LIBRARIES})
 
 SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 find_package(SimpleAmqpClient REQUIRED)

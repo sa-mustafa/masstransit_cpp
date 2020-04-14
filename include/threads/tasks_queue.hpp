@@ -35,6 +35,11 @@ namespace masstransit_cpp
 				return res;
 			}
 
+			bool is_stopped()
+			{
+				return stop_;
+			}
+
 			void stop()
 			{
 				{

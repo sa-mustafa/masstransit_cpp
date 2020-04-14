@@ -4,8 +4,7 @@ namespace masstransit_cpp
 {
 	namespace threads
 	{
-		worker_thread::worker_thread()
-			: worker_(*this)
+		worker_thread::worker_thread(uint32_t core) : worker_(*this, core)
 		{
 		}
 
@@ -16,7 +15,7 @@ namespace masstransit_cpp
 
 		void worker_thread::wait() const
 		{
-			worker_.attach();
+			worker_.wait();
 		}
 	}
 }

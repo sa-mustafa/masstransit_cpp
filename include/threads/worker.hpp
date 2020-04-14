@@ -8,10 +8,10 @@ namespace masstransit_cpp
 		class MASSTRANSIT_API worker
 		{
 		public:
-			explicit worker(tasks_queue & queue);
+			explicit worker(tasks_queue & queue, uint32_t core = UINT32_MAX);
 			~worker();
 
-			void attach() const;
+			void wait() const;
 
 		protected:
 			std::future<void> future_;

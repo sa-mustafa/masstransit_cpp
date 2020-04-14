@@ -12,6 +12,7 @@ namespace masstransit_cpp
 {
 	namespace threads {
 		class task_repeat;
+		class thread_pool;
 		class worker_thread;
 	}
 
@@ -45,9 +46,7 @@ namespace masstransit_cpp
 		const host_info host_info_;
 		const message_publisher message_publisher_;
 
-		std::shared_ptr<threads::task_repeat> receiving_loop_;
+		std::shared_ptr<threads::thread_pool> receive_workers_;
 		std::unique_ptr<threads::worker_thread> publish_worker_;
-
-		bool process_input_messages();
 	};
 }

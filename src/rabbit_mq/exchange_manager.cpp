@@ -27,11 +27,11 @@ namespace masstransit_cpp
 			}
 			catch (std::exception const& ex)
 			{
-				std::cout /*BOOST_LOG_TRIVIAL(error)*/ << "exchange_manager::declare_message_type\n\tException: " << ex.what();
+				/*BOOST_LOG_TRIVIAL(error)*/ std::cout << "exchange_manager::declare_message_type\n\tException: " << ex.what();
 			}
 			catch (...)
 			{
-				std::cout /*BOOST_LOG_TRIVIAL(error)*/ << "exchange_manager::declare_message_type\n\tException: unknown";
+				/*BOOST_LOG_TRIVIAL(error)*/ std::cout << "exchange_manager::declare_message_type\n\tException: unknown";
 			}
 		}
 	}

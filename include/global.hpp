@@ -1,7 +1,7 @@
 #pragma once
 
 #define MASSTRANSIT_VERSION_MAJOR 1
-#define MASSTRANSIT_VERSION_MINOR 2
+#define MASSTRANSIT_VERSION_MINOR 3
 #define MASSTRANSIT_VERSION_PATCH 0
 
 #if defined _WIN32 || defined __CYGWIN__

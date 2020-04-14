@@ -40,11 +40,11 @@ namespace masstransit_cpp
 					}
 					catch (std::exception & ex)
 					{
-						std::cout /*BOOST_LOG_TRIVIAL(error)*/ << "when bus consumer[" << consumer->message_type() << "] try handle message:\n" << body << "\n\tException: " << ex.what();
+						/*BOOST_LOG_TRIVIAL(error)*/ std::cout << "when bus consumer[" << consumer->message_type() << "] try handle message:\n" << body << "\n\tException: " << ex.what();
 					}
 					catch (...)
 					{
-						std::cout /*BOOST_LOG_TRIVIAL(error)*/ << "when bus consumer[" << consumer->message_type() << "] try handle message:\n" << body << "\n\tException: unknown";
+						/*BOOST_LOG_TRIVIAL(error)*/ std::cout << "when bus consumer[" << consumer->message_type() << "] try handle message:\n" << body << "\n\tException: unknown";
 					}
 				}, context);
 			}

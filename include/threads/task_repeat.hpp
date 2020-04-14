@@ -36,7 +36,7 @@ namespace masstransit_cpp
 			~task_repeat()
 			{
 				stop();
-				if (future_.valid()) future_.wait();
+				wait();
 			}
 
 			void wait() const
