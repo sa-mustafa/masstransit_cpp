@@ -102,7 +102,17 @@ namespace masstransit_cpp
 			char date_time[100];
 			std::time_t now_t = std::time(nullptr);
 			std::tm now_tm;
+
+#ifdef _WIN32
+#ifdef __MINGW32__
+			now_tm = *::localtime(&now_t);
+#else
 			localtime_s(&now_tm, &now_t);
+#endif
+#else
+			localtime_r(&now_t, &now_tm);
+#endif
+
 			strftime(date_time, std::size(date_time), "%F %T", &now_tm);
 
 			context.headers.emplace("MT-Fault-Message", std::string(ex.what()));
