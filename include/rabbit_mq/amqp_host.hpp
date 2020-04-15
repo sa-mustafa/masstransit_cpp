@@ -1,6 +1,7 @@
 #pragma once
 
 #include <global.hpp>
+#include <memory>
 #include <optional>
 #include <string>
 
