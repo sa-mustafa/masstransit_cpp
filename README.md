@@ -1,6 +1,6 @@
 # Masstransit_cpp [![Build Status](https://api.travis-ci.org/sa-mustafa/masstransit_cpp.svg?branch=master)](https://api.travis-ci.org/sa-mustafa/masstransit_cpp)
 
-AMQP message publishing and consuming library. Like and a little compatible with [MassTransit for .Net](https://github.com/MassTransit/MassTransit). It's using [SimpleAmqpClient](https://github.com/alanxz/SimpleAmqpClient).
+AMQP message publishing and consuming library. Like and a little compatible with [MassTransit for .Net](https://github.com/MassTransit/MassTransit). It's using [SimpleAmqpClient](https://github.com/alanxz/SimpleAmqpClient). This fork replaces the original boost with C++ 17 features.
 
 ### Quick start
 
