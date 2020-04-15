@@ -3,6 +3,7 @@
 #include <global.hpp>
 #include <queue>
 #include <thread>
+#include <functional>
 #include <future>
 #include <type_traits>
 
