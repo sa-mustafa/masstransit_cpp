@@ -3,7 +3,9 @@
 
 #include <chrono>
 #include <ctime>
+#include <iterator>
 #include <stdexcept>
+#include <time.h>
 #include <SimpleAmqpClient/SimpleAmqpClient.h>
 
 namespace masstransit_cpp
@@ -101,7 +103,7 @@ namespace masstransit_cpp
 			std::time_t now_t = std::time(nullptr);
 			std::tm now_tm;
 			localtime_s(&now_tm, &now_t);
-			strftime(date_time, _countof(date_time), "%F %T", &now_tm);
+			strftime(date_time, std::size(date_time), "%F %T", &now_tm);
 
 			context.headers.emplace("MT-Fault-Message", std::string(ex.what()));
 			context.headers.emplace("MT-Fault-Timestamp", date_time);
