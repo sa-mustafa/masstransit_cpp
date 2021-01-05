@@ -3,6 +3,7 @@
 #include <global.hpp>
 #include <memory>
 #include <set>
+#include <string>
 
 namespace AmqpClient { class Channel; }
 

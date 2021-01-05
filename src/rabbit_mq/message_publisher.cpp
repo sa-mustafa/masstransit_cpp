@@ -1,7 +1,7 @@
 #include "rabbit_mq/message_publisher.hpp"
 
 #include <SimpleAmqpClient/Channel.h>
-#include <boost/uuid/uuid_io.hpp>
+#include <utils/uuid.hpp>
 #include <iostream>
 
 namespace masstransit_cpp

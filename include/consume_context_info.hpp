@@ -1,20 +1,19 @@
 #pragma once
 
 #include <global.hpp>
-#include <json.hpp>
 #include <host_info.hpp>
+#include <utils/json.hpp>
+#include <utils/uuid.hpp>
 
-#include <boost/uuid/uuid.hpp>
-#include <boost/uuid/random_generator.hpp>
 #include <optional>
 
 namespace masstransit_cpp
 {
 	struct MASSTRANSIT_API consume_context_info
 	{
-		boost::uuids::uuid message_id;
-		boost::uuids::uuid conversation_id;
-		std::optional<boost::uuids::uuid> correlation_id;
+		uuids::uuid message_id;
+		uuids::uuid conversation_id;
+		std::optional<uuids::uuid> correlation_id;
 		std::string source_address;
 		std::string destination_address;
 
@@ -32,7 +31,7 @@ namespace masstransit_cpp
 		{
 			consume_context_info info;
 			
-			boost::uuids::random_generator random;
+			uuids::random_generator random;
 			info.message_id = random();
 			info.conversation_id = random();
 			
@@ -48,7 +47,7 @@ namespace masstransit_cpp
 		{
 			consume_context_info info;
 
-			boost::uuids::random_generator random;
+			uuids::random_generator random;
 			info.message_id = random();
 			info.conversation_id = conversation_id;
 			info.correlation_id = message_id;

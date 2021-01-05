@@ -1,5 +1,5 @@
 #include <consume_context_info.hpp>
-#include <json_adapters.hpp>
+#include "utils/json_adapters.hpp"
 
 namespace masstransit_cpp
 {
@@ -27,8 +27,8 @@ namespace masstransit_cpp
 
 	void from_json(nlohmann::json const& j, consume_context_info& p)
 	{
-		p.message_id = j.at("messageId").get<boost::uuids::uuid>();
-		p.conversation_id = j.at("conversationId").get<boost::uuids::uuid>();
+		p.message_id = j.at("messageId").get<uuids::uuid>();
+		p.conversation_id = j.at("conversationId").get<uuids::uuid>();
 		p.source_address = j.at("sourceAddress").get<std::string>();
 		p.destination_address = j.at("destinationAddress").get<std::string>();
 		p.message_types = j.at("messageType").get<std::vector<std::string>>();
@@ -38,7 +38,7 @@ namespace masstransit_cpp
 		const auto correlation_id = j.find("correlationId");
 		if(correlation_id != j.end())
 		{
-			p.correlation_id = correlation_id->get<boost::uuids::uuid>();
+			p.correlation_id = correlation_id->get<uuids::uuid>();
 		}
 	}
 

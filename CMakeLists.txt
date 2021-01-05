@@ -19,18 +19,11 @@ set(MTC_SOVERSION ${_VERSION_MAJOR})
 
 # Dependencies
 
-find_package(Boost REQUIRED)
-include_directories(SYSTEM ${Boost_INCLUDE_DIR})
-#link_directories(${Boost_LIBRARY_DIRS})
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBOOST_ALL_NO_LIB -DBOOST_LOG_DYN_LINK")
-#set(AdditionalLibraries ${AdditionalLibraries} ${Boost_LIBRARIES})
-
 SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 find_package(SimpleAmqpClient REQUIRED)
 find_package(Rabbitmqc REQUIRED)
 include_directories(SYSTEM ${SimpleAmqpClient_INCLUDE_DIRS})
 set(AdditionalLibraries ${AdditionalLibraries} ${SimpleAmqpClient_LIBRARIES} ${Rabbitmqc_LIBRARIES})
-
 
 # Sources
 
@@ -45,13 +38,13 @@ set(SOURCE_FILES
 	include/host_info.hpp
 	include/i_message_consumer.hpp
 	include/i_publish_endpoint.hpp
-	include/json.hpp
-	include/json_adapters.hpp
 	include/message_consumer.hpp
 	include/message_handler.hpp
 	include/i_receive_endpoint.hpp
 	include/i_receive_endpoint_configurator.hpp
-	include/uuid.hpp
+	include/utils/json.hpp
+	include/utils/json_adapters.hpp
+	include/utils/uuid.hpp
 
 	include/rabbit_mq/exchange_manager.hpp
 	include/rabbit_mq/message_publisher.hpp
@@ -74,9 +67,9 @@ set(SOURCE_FILES
 	src/bus_factory.cpp
 	src/consume_context_info.cpp
 	src/host_info.cpp
-	src/json_adapters.cpp
 	src/i_receive_endpoint.cpp
 	src/i_receive_endpoint_configurator.cpp
+	src/utils/json_adapters.cpp
 
 	src/in_memory/receive_endpoint.cpp
 	src/in_memory/receive_endpoint_configurator.cpp
@@ -93,7 +86,7 @@ set(SOURCE_FILES
 	src/threads/thread_pool.cpp
 	src/threads/worker.cpp
 	src/threads/worker_thread.cpp
-	)
+)
 
 if(${CMAKE_VERSION} GREATER_EQUAL 3.8.2)
 	source_group(TREE ${PROJECT_SOURCE_DIR} FILES ${SOURCE_FILES})
@@ -109,9 +102,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_FLAGS "-std=c++1z")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMODULE_SETUP_DLL_EXPORTS")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMASSTRANSIT_DLL_EXPORTS")
 if(BUILD_SHARED_LIBS)
@@ -123,9 +114,11 @@ add_library(masstransit ${SOURCE_FILES})
 target_link_libraries(masstransit ${AdditionalLibraries})
 
 if (WIN32)
-  set_target_properties(masstransit PROPERTIES VERSION ${MTC_VERSION} OUTPUT_NAME masstransit.${MTC_SOVERSION})
+	set_target_properties(masstransit PROPERTIES VERSION ${MTC_VERSION} OUTPUT_NAME masstransit.${MTC_SOVERSION})
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DWIN32 -DNOMINMAX")
 else ()
-  set_target_properties(masstransit PROPERTIES VERSION ${MTC_VERSION} SOVERSION ${MTC_SOVERSION})
+	set_target_properties(masstransit PROPERTIES VERSION ${MTC_VERSION} SOVERSION ${MTC_SOVERSION})
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 endif ()
 
 set_property(GLOBAL PROPERTY USE_FOLDERS 1)

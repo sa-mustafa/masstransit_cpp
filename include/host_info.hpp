@@ -1,7 +1,7 @@
 #pragma once
 
 #include <global.hpp>
-#include <json.hpp>
+#include <utils/json.hpp>
 
 namespace masstransit_cpp
 {
