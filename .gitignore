@@ -1,10 +1,12 @@
 
+buid_*/
 build/
 _build/
 _install/
 _prereqs/
 .idea/
 .vscode/
+.vs/
 
 *~
 .*.sw?
